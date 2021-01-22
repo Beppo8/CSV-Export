@@ -3,11 +3,16 @@ defmodule TeacherWeb.AlbumController do
 
   alias Teacher.Records
   alias Teacher.Records.Album
+  alias Teacher.CSV.Builder
 
   def export(conn, _params) do
-    conn
-    |> put_resp_content_type("text/plain")
-    |> send_resp(200, "export csv")
+    albums = Records.list_albums()
+    send_any(
+      conn,
+      {:binary, Builder.to_csv([:artist, :title, :year, :summary], albums)},
+      content_type: "application/csv",
+      filename: "album-data.csv"
+    )
   end
 
   def index(conn, _params) do
