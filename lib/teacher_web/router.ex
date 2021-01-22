@@ -16,6 +16,7 @@ defmodule TeacherWeb.Router do
   scope "/", TeacherWeb do
     pipe_through :browser # Use the default browser stack
 
+    get "/alnums/export", AlbumController, :export
     get "/", AlbumController, :index
     resources "/albums", AlbumController
   end

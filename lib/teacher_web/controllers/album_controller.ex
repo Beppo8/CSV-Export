@@ -4,6 +4,12 @@ defmodule TeacherWeb.AlbumController do
   alias Teacher.Records
   alias Teacher.Records.Album
 
+  def export(conn, _params) do
+    conn
+    |> put_resp_content_type("text/plain")
+    |> send_resp(200, "export csv")
+  end
+
   def index(conn, _params) do
     albums = Records.list_albums()
     built_with = "Built with Elixir and Phoenix"
